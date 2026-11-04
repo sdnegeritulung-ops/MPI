@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Petualangan Bagian-Bagian Tumbuhan</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700&display=swap">
+<style>
+:root{--sea:#8fd3ea;--sea2:#6bbfdc;--sky:#fdf0b8;--ink:#4a2c17;--paper:#fff8e3;--card:#fffdf4;--leaf:#6fb552;--leaf2:#4f9a3e;--sand:#f2c14e;--accent:#e8743b;--ok:#2e9d5b;--bad:#d1453b;--wood:#a8703a;--line:#e5d6a7;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--sea:#1f5d7a;--sea2:#18506b;--sky:#3b3a2a;--ink:#f6e8c8;--paper:#2d2a1e;--card:#3a3626;--leaf:#5aa043;--leaf2:#43842f;--line:#5a5132;color-scheme:dark}}
+:root[data-theme="dark"]{--sea:#1f5d7a;--sea2:#18506b;--sky:#3b3a2a;--ink:#f6e8c8;--paper:#2d2a1e;--card:#3a3626;--leaf:#5aa043;--leaf2:#43842f;--line:#5a5132;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{font-family:Nunito,system-ui,sans-serif;color:var(--ink);background:linear-gradient(var(--sky),var(--sea) 30%);background-attachment:fixed;background-color:var(--sea)}
+h1,h2,h3,.disp{font-family:"Baloo 2",Nunito,system-ui,sans-serif;margin:0}
+header{text-align:center;padding:18px 12px 6px}
+.banner{display:inline-block;background:var(--paper);border:3px solid var(--ink);border-radius:6px;padding:6px 34px 4px;position:relative}
+.banner h1{font-size:clamp(20px,4.6vw,38px);font-weight:800;line-height:1.1}
+.banner p{margin:0 0 4px;font-size:clamp(13px,2.2vw,17px);font-weight:700}
+.bar{display:flex;gap:10px;justify-content:center;align-items:center;margin:10px 0;flex-wrap:wrap}
+.chip{background:var(--paper);border:2px solid var(--ink);border-radius:999px;padding:4px 14px;font-weight:700}
+.chip button{all:unset;cursor:pointer}
+.stage{position:relative;width:min(1100px,96vw);margin:0 auto;aspect-ratio:1000/560;border-radius:18px;overflow:hidden;border:3px solid var(--ink);background:var(--sea)}
+.stage svg{position:absolute;inset:0;width:100%;height:100%}
+.post{position:absolute;transform:translate(-50%,-50%);border:0;background:none;cursor:pointer;text-align:center;font:inherit;color:inherit;padding:0}
+.post .sign{display:block;background:var(--wood);color:#fff8e3;border:2.5px solid #5a3818;border-radius:6px;padding:3px 10px;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(9px,1.7vw,16px);white-space:nowrap;box-shadow:0 3px 0 #5a3818}
+.post .ico{display:block;font-size:clamp(26px,6vw,58px);line-height:1;filter:drop-shadow(0 2px 0 rgba(0,0,0,.25))}
+.post:hover .ico,.post:focus-visible .ico{transform:scale(1.12)}
+.post:focus-visible{outline:3px solid var(--accent);outline-offset:4px;border-radius:8px}
+.post.lock{filter:grayscale(1);opacity:.55;cursor:not-allowed}
+.post.now .sign{background:var(--accent);animation:pulse 1.6s ease-in-out infinite}
+.post.done .sign::after{content:" ⭐"}
+@keyframes pulse{50%{transform:scale(1.07)}}
+.lbl{position:absolute;font-family:"Baloo 2",sans-serif;font-weight:800;color:#3b2a12;font-size:clamp(9px,1.6vw,15px);pointer-events:none;letter-spacing:.03em}
+.hud{position:absolute;left:10px;bottom:10px;background:var(--paper);border:2px solid var(--ink);border-radius:8px;padding:6px 10px;font-size:clamp(9px,1.4vw,13px);line-height:1.5}
+.go{position:absolute;right:12px;bottom:12px;border:3px solid #17655f;background:#2bb3a8;color:#fff;font-family:"Baloo 2",sans-serif;font-weight:800;font-size:clamp(12px,2.3vw,22px);padding:6px 20px;border-radius:12px;cursor:pointer;box-shadow:0 4px 0 #17655f}
+.go:active{transform:translateY(3px);box-shadow:0 1px 0 #17655f}
+.go:focus-visible,.btn:focus-visible,.opt:focus-visible,.chip button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.msg{width:min(1100px,96vw);margin:12px auto 24px;text-align:center;font-weight:700;background:var(--paper);border:2px solid var(--ink);border-radius:12px;padding:8px 12px}
+dialog{border:3px solid var(--ink);border-radius:18px;background:var(--card);color:var(--ink);padding:0;width:min(560px,94vw);max-height:92vh;overflow:auto}
+dialog::backdrop{background:rgba(20,40,50,.55)}
+.in{padding:18px 20px 20px}
+.top{display:flex;gap:12px;align-items:center}
+.top .big{font-size:52px}
+.top h2{font-size:26px;line-height:1.1}
+.top small{font-weight:700;opacity:.8}
+.facts{display:grid;gap:8px;margin:14px 0;padding:0;list-style:none}
+.facts li{background:var(--paper);border-left:6px solid var(--leaf);border-radius:8px;padding:8px 12px}
+.q{font-weight:800;font-size:18px;margin:10px 0}
+.opts{display:grid;gap:8px}
+.opt{all:unset;box-sizing:border-box;cursor:pointer;background:var(--paper);border:2.5px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:700}
+.opt:hover{border-color:var(--leaf2)}
+.opt.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.fb{min-height:24px;font-weight:700;margin:8px 0}
+.btn{border:0;background:var(--leaf2);color:#fff;font:800 17px "Baloo 2",sans-serif;padding:8px 22px;border-radius:12px;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3)}
+.btn.sec{background:var(--wood)}
+.row{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:10px}
+.dots{display:flex;gap:6px}.dots i{width:12px;height:12px;border-radius:50%;background:var(--line)}.dots i.on{background:var(--leaf2)}
+.fin{text-align:center}.fin .big{font-size:72px}
+@media (prefers-reduced-motion:reduce){.post.now .sign{animation:none}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="banner"><h1>PETUALANGAN BAGIAN-BAGIAN TUMBUHAN</h1><p>Jelajahi Indonesia &amp; belajar biologi!</p></div>
+  <div class="bar">
+    <span class="chip" id="stars">⭐ 0 / 5 pos</span>
+    <span class="chip"><button id="theme" aria-label="Ganti tema terang atau gelap">🌓 Tema</button></span>
+    <span class="chip"><button id="reset">↺ Ulangi</button></span>
+  </div>
+</header>
+
+<div class="stage" id="stage">
+<svg viewBox="0 0 1000 560" preserveAspectRatio="none" aria-hidden="true">
+  <g fill="#fff" opacity=".28"><circle cx="120" cy="500" r="30"/><circle cx="880" cy="500" r="40"/><circle cx="560" cy="540" r="25"/></g>
+  <g stroke="#3b2a12" stroke-width="3" stroke-linejoin="round">
+    <path fill="#f2c14e" d="M60 130 Q90 110 130 150 L260 290 Q330 350 345 420 L300 440 Q230 390 170 300 Q100 220 60 130Z"/>
+    <path fill="#6fb552" d="M85 150 Q110 135 140 165 L250 295 Q305 350 320 405 Q250 370 190 290 Q120 215 85 150Z"/>
+    <path fill="#f2c14e" d="M345 175 Q400 130 470 150 Q540 130 580 190 Q600 260 560 320 Q500 350 440 335 Q370 330 350 260Z"/>
+    <path fill="#6fb552" d="M370 190 Q410 155 470 170 Q530 160 560 205 Q575 260 540 305 Q490 325 440 315 Q385 305 372 255Z"/>
+    <path fill="#6fb552" d="M300 450 Q360 430 420 450 L500 455 Q520 480 470 490 L340 495 Q290 480 300 450Z"/>
+    <path fill="#f2c14e" d="M650 210 Q700 190 760 225 Q735 260 760 290 Q790 300 800 320 L760 340 Q730 320 715 350 L735 410 Q700 430 690 380 Q670 330 650 300 Q640 250 650 210Z"/>
+    <path fill="#6fb552" d="M670 225 Q705 210 735 235 Q715 265 740 295 Q705 305 690 340 Q670 300 660 270Z"/>
+    <path fill="#f2c14e" d="M770 170 Q830 150 880 190 L860 235 Q820 215 790 230Z"/>
+    <path fill="#f2c14e" d="M790 330 Q860 280 940 320 Q990 360 975 440 Q930 470 880 430 Q820 410 790 330Z"/>
+    <path fill="#6fb552" d="M815 335 Q870 300 930 335 Q965 370 955 420 Q920 440 885 410 Q835 395 815 335Z"/>
+    <path fill="#f2c14e" d="M520 480 Q580 470 640 490 Q640 515 580 515Q530 510 520 480Z"/>
+    <path fill="#f2c14e" d="M690 480 Q740 460 800 475 Q800 505 740 510Q700 505 690 480Z"/>
+  </g>
+  <path d="M170 190 C260 250 300 330 350 440 S470 330 450 250 S600 300 700 290 S840 250 880 260" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="3 12" stroke-linecap="round" opacity=".9"/>
+  <g fill="#2f6b2c" opacity=".8"><path d="M200 230l14-30 14 30zM440 230l14-30 14 30zM870 370l14-30 14 30z"/></g>
+</svg>
+<span class="lbl" style="left:14%;top:56%">SUMATRA</span>
+<span class="lbl" style="left:37%;top:56%">KALIMANTAN</span>
+<span class="lbl" style="left:36%;top:90%">JAWA</span>
+<span class="lbl" style="left:63%;top:84%">SULAWESI</span>
+<span class="lbl" style="left:86%;top:80%">PAPUA</span>
+
+<div class="hud"><b>Legenda</b><br>🌱 Pos belum dibuka<br>⭐ Pos selesai<br>🔶 Pos tujuanmu</div>
+<button class="go" id="go">MULAI PETUALANGAN!</button>
+</div>
+<div class="msg" id="msg">Tekan “Mulai Petualangan!” untuk berangkat dari Sumatra.</div>
+
+<dialog id="dlg" aria-labelledby="dt"><div class="in" id="dbody"></div></dialog>
+
+<script>
+const POS=[
+ {id:'akar',n:'Pos Akar',pulau:'Sumatra',e:'🥕',x:17,y:33,
+  info:['Akar menyerap air dan mineral dari dalam tanah.','Akar menopang tumbuhan agar tegak kuat.','Ada akar tunggang (mangga, kacang) dan akar serabut (padi, jagung).','Sebagian akar menyimpan cadangan makanan, contohnya wortel.'],
+  q:[{t:'Apa fungsi utama akar?',o:['Menyerap air dan mineral','Membuat biji','Menghasilkan klorofil'],a:0},{t:'Tumbuhan manakah yang berakar tunggang?',o:['Padi','Mangga','Jagung'],a:1}]},
+ {id:'batang',n:'Pos Batang',pulau:'Jawa',e:'🌳',x:36,y:76,
+  info:['Batang menopang daun, bunga, dan buah.','Xilem mengangkut air dan mineral dari akar ke daun.','Floem mengangkut hasil fotosintesis ke seluruh tubuh tumbuhan.','Batang tebu menyimpan cadangan makanan berupa gula.'],
+  q:[{t:'Pembuluh yang mengangkut air dari akar ke daun disebut …',o:['Floem','Stomata','Xilem'],a:2},{t:'Selain mengangkut zat, batang berfungsi untuk …',o:['Menopang tubuh tumbuhan','Menyerap cahaya','Menyerbuki bunga'],a:0}]},
+ {id:'daun',n:'Pos Daun',pulau:'Kalimantan',e:'🌿',x:46,y:30,
+  info:['Daun adalah tempat fotosintesis.','Klorofil, zat hijau daun, menangkap cahaya matahari.','Stomata adalah pori kecil untuk keluar-masuk gas.','Daun menyerap karbon dioksida dan melepas oksigen.'],
+  q:[{t:'Zat hijau pada daun bernama …',o:['Klorofil','Xilem','Serbuk sari'],a:0},{t:'Gas apa yang diserap daun saat fotosintesis?',o:['Oksigen','Karbon dioksida','Nitrogen'],a:1}]},
+ {id:'bunga',n:'Pos Bunga',pulau:'Sulawesi',e:'🌸',x:68,y:48,
+  info:['Bunga adalah alat perkembangbiakan tumbuhan.','Benang sari menghasilkan serbuk sari; putik menerimanya.','Mahkota yang berwarna menarik lebah dan kupu-kupu.','Perpindahan serbuk sari ke putik disebut penyerbukan.'],
+  q:[{t:'Bagian bunga yang menghasilkan serbuk sari adalah …',o:['Putik','Benang sari','Kelopak'],a:1},{t:'Hewan yang sering membantu penyerbukan adalah …',o:['Lebah','Ikan','Siput'],a:0}]},
+ {id:'buah',n:'Pos Buah & Biji',pulau:'Papua',e:'🍎',x:88,y:34,
+  info:['Buah melindungi biji dan membantu penyebarannya.','Biji dapat tumbuh menjadi tumbuhan baru.','Buah berkembang dari bakal buah setelah penyerbukan.','Biji disebarkan oleh angin, air, dan hewan.'],
+  q:[{t:'Bagian yang bisa tumbuh menjadi tumbuhan baru adalah …',o:['Kulit buah','Biji','Daun'],a:1},{t:'Buah berkembang dari …',o:['Bakal buah','Akar','Batang'],a:0}]}
+];
+const $=s=>document.querySelector(s);
+let st={started:false,done:[]};
+const stage=$('#stage'),msg=$('#msg'),dlg=$('#dlg'),body=$('#dbody');
+const cur=()=>st.done.length;
+function render(){
+  stage.querySelectorAll('.post').forEach(p=>p.remove());
+  POS.forEach((p,i)=>{
+    const b=document.createElement('button');
+    const done=st.done.includes(p.id),now=st.started&&i===cur(),open=st.started&&i<=cur();
+    b.className='post'+(done?' done':'')+(now?' now':'')+(!open?' lock':'');
+    b.style.left=p.x+'%';b.style.top=p.y+'%';
+    b.setAttribute('aria-label',p.n+', '+p.pulau+(open?'':' (terkunci)'));
+    b.innerHTML='<span class="ico">'+(open?p.e:'🔒')+'</span><span class="sign">'+p.n.toUpperCase()+'</span>';
+    b.onclick=()=>openPos(i);
+    stage.appendChild(b);
+  });
+  $('#stars').textContent='⭐ '+st.done.length+' / 5 pos';
+  $('#go').textContent=st.started?(cur()>=5?'SELESAI! 🎉':'LANJUT: '+POS[cur()].n.toUpperCase()):'MULAI PETUALANGAN!';
+  msg.textContent=!st.started?'Tekan “Mulai Petualangan!” untuk berangkat dari Sumatra.':cur()>=5?'Hebat! Kamu sudah mengunjungi kelima pos.':'Pergi ke '+POS[cur()].n+' di '+POS[cur()].pulau+'.';
+}
+function openPos(i){
+  if(!st.started){msg.textContent='Tekan “Mulai Petualangan!” dulu ya.';return}
+  if(i>cur()){msg.textContent='Selesaikan '+POS[cur()].n+' lebih dulu.';return}
+  const p=POS[i];
+  body.innerHTML='<div class="top"><span class="big">'+p.e+'</span><div><h2 id="dt">'+p.n+'</h2><small>'+p.pulau+'</small></div></div>'+
+   '<ul class="facts">'+p.info.map(t=>'<li>'+t+'</li>').join('')+'</ul>'+
+   '<div class="row"><button class="btn sec" data-c>Tutup</button><button class="btn" data-q>Mulai kuis</button></div>';
+  body.querySelector('[data-c]').onclick=()=>dlg.close();
+  body.querySelector('[data-q]').onclick=()=>quiz(i,0,0);
+  if(!dlg.open)dlg.showModal();
+}
+function quiz(i,k,score){
+  const p=POS[i],q=p.q[k];
+  body.innerHTML='<div class="top"><span class="big">'+p.e+'</span><div><h2 id="dt">Kuis '+p.n+'</h2><small>Soal '+(k+1)+' dari '+p.q.length+'</small></div></div>'+
+   '<div class="q">'+q.t+'</div><div class="opts">'+q.o.map((o,j)=>'<button class="opt" data-j="'+j+'">'+o+'</button>').join('')+'</div>'+
+   '<div class="fb" role="status" aria-live="polite"></div><div class="row"><div class="dots">'+p.q.map((_,j)=>'<i class="'+(j<k?'on':'')+'"></i>').join('')+'</div><button class="btn" data-n hidden>Lanjut</button></div>';
+  const btns=[...body.querySelectorAll('.opt')],fb=body.querySelector('.fb'),nx=body.querySelector('[data-n]');
+  let answered=false,ok=false;
+  btns.forEach(b=>b.onclick=()=>{
+    if(answered&&ok)return;
+    const j=+b.dataset.j;
+    if(j===q.a){b.classList.add('ok');ok=answered=true;fb.textContent='Benar! 🎉';nx.hidden=false;nx.focus()}
+    else{b.classList.add('bad');b.disabled=true;answered=true;fb.textContent='Belum tepat. Coba lagi!'}
+  });
+  nx.onclick=()=>k+1<p.q.length?quiz(i,k+1,score):finish(i);
+}
+function finish(i){
+  const p=POS[i];
+  if(!st.done.includes(p.id))st.done.push(p.id);
+  const last=st.done.length>=5;
+  body.innerHTML='<div class="fin"><div class="big">'+(last?'🏆':'⭐')+'</div><h2 id="dt">'+(last?'Petualangan selesai!':p.n+' selesai!')+'</h2><p>'+(last?'Kamu sudah mengenal akar, batang, daun, bunga, serta buah dan biji. Kamu penjelajah tumbuhan sejati!':'Kamu mendapat satu bintang. Berikutnya: '+POS[i+1].n+' di '+POS[i+1].pulau+'.')+'</p><button class="btn" data-c>'+(last?'Kembali ke peta':'Lanjut ke peta')+'</button></div>';
+  body.querySelector('[data-c]').onclick=()=>dlg.close();
+  render();
+}
+$('#go').onclick=()=>{
+  if(!st.started){st.started=true;render();openPos(0)}
+  else if(cur()<5)openPos(cur());
+};
+$('#reset').onclick=()=>{st={started:false,done:[]};render()};
+$('#theme').onclick=()=>{
+  const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);
+  r.dataset.theme=d?'light':'dark';
+};
+render();
+</script>
+</body>
+</html>
